@@ -1,0 +1,6 @@
+Install libevent, libgflags, libglog, or add
+/afs/cs/academic/class/15418-s13/public/lib to your LD_LIBRARY_PATH.
+
+libevent: http://libevent.org/
+libgflags: https://code.google.com/p/gflags/
+libglog: https://code.google.com/p/google-glog/
