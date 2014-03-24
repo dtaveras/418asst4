@@ -1,7 +1,6 @@
 // Copyright 2013 15418 Course Staff.
 // This was most helpful: http://eradman.com/posts/kqueue-tcp.html
 
-
 #include <assert.h>
 //#include <boost/unordered_set.hpp>
 #include <set>

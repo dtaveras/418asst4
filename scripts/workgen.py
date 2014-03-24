@@ -119,7 +119,7 @@ conn_pool = ConnectionPool(args.address)
 # wait until the server is ready before sending requests
 ######################################################################
 
-print "Waiting for server to initialize...";
+print "Waiting for server to initialize..." + '\033[92m';
 server_ready = False
 while not server_ready:
   sock = conn_pool.get_conn()
@@ -136,7 +136,7 @@ while not server_ready:
 # Server is ready. Start the trace
 ######################################################################
     
-print "Server ready, beginning trace...";
+print "Server ready, beginning trace..." + '\033[95m';
     
 start_time = datetime.datetime.now()
 traceJobs = []
@@ -192,7 +192,7 @@ total_uptime = float(items[1])
 ######################################################################
 
 print ""
-print "--- Results Summary ---" 
+print "--- Results Summary ---" + '\033[90m'
 print ""
 
 avg_latency = 0.0;
@@ -211,12 +211,12 @@ for job in traceJobs:
     print "[%d] Request: %s, success: %s, latency: %d" % (job.id, job.descr['work'], success_str, 1000 * job.latency.total_seconds());
 
 if any_failed_request:
-  print ""
+  print ""  + '\033[93m'
   print "*** WARNING: The server returned incorrect responses! ***"
-  print ""
+  print ""  + '\033[97m'
 else:
   print ""
-  print "*** The results are correct! ***"
+  print "*** The results are correct! ***" + '\033[94m'
   print ""
 
 avg_latency = avg_latency / jobs_counted;
@@ -224,7 +224,7 @@ print "Avg request latency:  %.2f ms" % avg_latency;
 print "Total test time:      %.2f sec" % elapsed_time;
 print "Workers booted:       %d"   % total_workers;
 print "Compute used:         %.2f sec" % total_uptime; 
-print ""
+print ""  + '\033[97m'
 
 run_grader(args.tracefile.name, not any_failed_request, traceJobs, total_uptime, avg_latency, elapsed_time);
 

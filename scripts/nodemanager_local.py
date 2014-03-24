@@ -68,7 +68,7 @@ def local_command(addr, worker_args):
       workerparams_str = "--workerparams=\"%s\"" % worker_args;  
 
     # XXX(awreece) Lol this is hilariously insecure.
-    cmd = "./worker %s %s %s" % (arg_string, workerparams_str, addr)
+    cmd = "./worker.exe %s %s %s" % (arg_string, workerparams_str, addr)
     #print cmd;
     return cmd;
     

@@ -46,7 +46,6 @@ static void execute_compareprimes(const Request_msg& req, Response_msg& resp) {
       resp.set_response("There are more primes in second range.");
 }
 
-
 void worker_node_init(const Request_msg& params) {
 
   // This is your chance to initialize your worker.  For example, you
@@ -59,31 +58,33 @@ void worker_node_init(const Request_msg& params) {
 }
 
 void worker_handle_request(const Request_msg& req) {
+  //Delegate the work to a new thread and return as quickly as possible
+  //so we can service the next request
+  pthread_t w_thread;
+  Request_msg* copy_req = new Request_msg(req);
+  int ret = pthread_create(&w_thread,NULL,worker_thread_execute,(void*)copy_req);
 
+  //pthread_join( thread1, NULL);
+  if(ret != 0) printf("Failed to create new thread\n");
+  return;
+}
 
+void* worker_thread_execute(void* rq){
+  Request_msg req = *((Request_msg*)rq);
+  free(rq);
   // Make the tag of the reponse match the tag of the request.  This
   // is a way for your master to match worker responses to requests.
   Response_msg resp(req.get_tag());
 
-
   if (req.get_arg("cmd").compare("compareprimes") == 0) {
-
     // The compareprimes command needs to be special cased since it is
-    // built on four calls to execute_execute work.  All other
-    // requests from the client are one-to-one with calls to
-    // execute_work.
-
+    // built on four calls to execute_execute work.
     execute_compareprimes(req, resp);
-
   } else {
-
-    // actually perform the work.  The response string is filled in by
-    // 'execute_work'
     execute_work(req, resp);
-
   }
 
   // send a response string to the master
   worker_send_response(resp);
-
+  pthread_exit(NULL);
 }

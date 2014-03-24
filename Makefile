@@ -8,8 +8,8 @@ LOGDIR=logs
 .PHONY: all run clean veryclean foo
 all : worker master
 
-run: run.sh worker master | $(LOGDIR)
-	./run.sh 1 tests/hello418.txt
+run: run.sh worker.exe master.exe | $(LOGDIR)
+	./run.sh 2 tests/nonuniform1.txt
 
 SRCS=
 DEPS=
@@ -84,11 +84,10 @@ $(DEPDIR)/%.d: $(SRCDIR)/%.cpp Makefile
 -include $(DEPS)
 
 clean:
-	rm -rf $(OBJDIR) master worker *.pyc
+	rm -rf $(OBJDIR) master.exe worker.exe *.pyc
 
 veryclean: clean
 	rm -rf $(DEPDIR) $(LOGDIR)
 
 cleanawslogs:
 	rm -rf job-*.tar.gz logs_*
-

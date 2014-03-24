@@ -34,6 +34,10 @@ void execute_work(const Request_msg& req, Response_msg& resp);
  ******************************************************************
  */
 
+/**
+ * typically used by a thread to execute the requested message
+ */
+void* worker_thread_execute(void* rq);
 
 /**
  * @brief Worker node init hook.

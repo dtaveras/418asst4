@@ -12,13 +12,13 @@ fi
 mkdir -p logs
 
 # Start the launcher and sleep a moment to make sure it is listening.
-./scripts/nodemanager_local.py $debug_pyflags 6666 --log_dir=logs $debug_cflags $configflags &
+./scripts/nodemanager_local.py $debug_pyflags 8668 --log_dir=logs $debug_cflags $configflags &
 
 nodemanager_pid=$!
 sleep .5
 
 # Start the master and sleep a moment to make sure it is listening.
-./master --max_workers $1 --address=$(hostname):15418 --log_dir=logs $debug_cflags $(hostname):6666 &
+./master.exe --max_workers $1 --address=$(hostname):15418 --log_dir=logs $debug_cflags $(hostname):8668 &
 master_pid=$!
 sleep .5
 

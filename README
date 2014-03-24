@@ -1,6 +1,3 @@
-Install libevent, libgflags, libglog, or add
-/afs/cs/academic/class/15418-s13/public/lib to your LD_LIBRARY_PATH.
+15-418 Assignment 4
 
-libevent: http://libevent.org/
-libgflags: https://code.google.com/p/gflags/
-libglog: https://code.google.com/p/google-glog/
+-- Don't Forget to remove the .exe before turning in the assignment
