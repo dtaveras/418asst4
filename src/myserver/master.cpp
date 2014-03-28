@@ -212,30 +212,5 @@ void handle_client_request(Client_handle client_handle, const Request_msg& clien
 }
 
 void handle_tick() {
-  // TODO: you may wish to take action here.  This method is called at
-  // fixed time intervals, according to how you set 'tick_period' in
-  // 'master_node_init'.
-  printf("handling tick\n");
-  printf("[Worker_Queue_Size: %d]\n", mstate.work_queue_size);
-  printf("[");
-  for(int i = 0; i < mstate.max_num_workers; i++){
-    if(mstate.workers[i] != NULL){
-      printf(" %d ",mstate.num_req_map[mstate.workers[i]]);
-    }
-  }
-  printf("]\n");
-  if(mstate.work_queue_size > 0){
-    Request_msg req = mstate.work_queue.get_work();
-    printf("GOT WORK!\n");
-    for(int i=0; i< mstate.max_num_workers; i++){
-      if( mstate.workers[i] != NULL &&
-	  mstate.num_req_map[mstate.workers[i]] < MAX_WORKER_JOBS ){
-	mstate.num_req_map[mstate.workers[i]] += 1;
-	send_request_to_worker(mstate.workers[i], req);
-	mstate.work_queue_size -= 1;
-	return;
-      }
-    }
-  }
 
 }
