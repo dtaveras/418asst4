@@ -4,35 +4,12 @@ HARNESSDIR=$(SRCDIR)/asst4harness
 DEPDIR=deps
 LOGDIR=logs
 
-TGRADING1=grading_burst.txt
-TGRADING2=grading_compareprimes.txt
-TGRADING3=grading_nonuniform1.txt
-TGRADING4=grading_nonuniform2.txt
-TGRADING5=grading_nonuniform3.txt
-
-TUNIFORM1=uniform1.txt
-TUNIFORM2=uniform2.txt
-TUNIFORM3=uniform3.txt
-TUNIFORM4=uniform4.txt
-
-TNONUNIFORM1=nonuniform1.txt
-TNONUNIFORM2=nonuniform2.txt
-
-TRANDOM=grading_random.txt
-THELLO=hello418.txt
-
 # all should come first in the file, so it is the default target!
 .PHONY: all run clean veryclean foo
-
 all : worker master
 
-run: run.sh worker master | $(LOGDIR)
-	./run.sh 2 tests/$(TGRADING1)
-	./run.sh 2 tests/$(TGRADING2)
-	./run.sh 2 tests/$(TGRADING3)
-	./run.sh 2 tests/$(TGRADING4)
-	./run.sh 2 tests/$(TGRADING5)
-	./run.sh 2 tests/$(TRANDOM)
+run: run.sh worker.exe master.exe | $(LOGDIR)
+	./run.sh 2 tests/nonuniform1.txt
 
 SRCS=
 DEPS=
@@ -103,14 +80,14 @@ $(DEPDIR)/%.d: $(SRCDIR)/%.cpp Makefile
         sed 's,$(notdir $*)\.o[ :]*,$(OBJDIR)/$*.o $@ : ,g' < $@.$$$$ > $@; \
 	rm -f $@.$$$$
 
+
 -include $(DEPS)
 
 clean:
-	rm -rf $(OBJDIR) master.exe worker.exe *.pyc
+	rm -rf $(OBJDIR) master worker *.pyc
 
 veryclean: clean
 	rm -rf $(DEPDIR) $(LOGDIR)
 
 cleanawslogs:
 	rm -rf job-*.tar.gz logs_*
-

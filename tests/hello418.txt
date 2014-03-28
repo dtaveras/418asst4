@@ -1,3 +1,5 @@
 {"time": 0, "work": "cmd=418wisdom;x=1", "resp": "OMG, 418 is so gr8!"}
-{"time": 200, "work": "cmd=418wisdom;x=11", "resp": "If all else fails... buy Kayvon donuts"}
-{"time": 4000, "work": "cmd=lastrequest", "resp": "ack" }
+{"time": 50, "work": "cmd=418wisdom;x=11", "resp": "If all else fails... buy Kayvon donuts"}
+{"time": 100, "work": "cmd=418wisdom;x=11", "resp": "If all else fails... buy Kayvon donuts"}
+{"time": 120, "work": "cmd=418wisdom;x=11", "resp": "If all else fails... buy Kayvon donuts"}
+{"time": 140, "work": "cmd=lastrequest", "resp": "ack" }

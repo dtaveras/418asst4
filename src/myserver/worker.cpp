@@ -1,5 +1,4 @@
 // Copyright 2013 15418 Course Staff.
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -8,7 +7,7 @@
 
 #include "server/messages.h"
 #include "server/worker.h"
-
+#include "tools/work_queue.h"
 
 // Generate a valid 'countprimes' request dictionary from integer 'n'
 static void create_computeprimes_req(Request_msg& req, int n) {
@@ -52,26 +51,15 @@ void worker_node_init(const Request_msg& params) {
   // might initialize a few data structures, or maybe even spawn a few
   // pthreads here.  Remember, when running on Amazon servers, worker
   // processes will run on an instance with a dual-core CPU.
-
   printf("**** Initializing worker: %s ****\n", params.get_arg("name").c_str());
 
 }
 
-void worker_handle_request(const Request_msg& req) {
-  //Delegate the work to a new thread and return as quickly as possible
-  //so we can service the next request
-  pthread_t w_thread;
-  Request_msg* copy_req = new Request_msg(req);
-  int ret = pthread_create(&w_thread,NULL,worker_thread_execute,(void*)copy_req);
-
-  //pthread_join( thread1, NULL);
-  if(ret != 0) printf("Failed to create new thread\n");
-  return;
-}
-
 void* worker_thread_execute(void* rq){
-  Request_msg req = *((Request_msg*)rq);
+  Request_msg req;
+  req = *((Request_msg*)rq);
   free(rq);
+
   // Make the tag of the reponse match the tag of the request.  This
   // is a way for your master to match worker responses to requests.
   Response_msg resp(req.get_tag());
@@ -86,5 +74,17 @@ void* worker_thread_execute(void* rq){
 
   // send a response string to the master
   worker_send_response(resp);
-  pthread_exit(NULL);
+  return NULL;
+}
+
+
+void worker_handle_request(const Request_msg& req) {
+  // Delegate the work to a new thread and return as quickly as possible
+  // so we can service the next request
+  pthread_t w_thread;
+  Request_msg* copy_req = new Request_msg(req);
+  int ret = pthread_create(&w_thread,NULL,worker_thread_execute,(void*)copy_req);
+  // pthread_join( thread1, NULL);
+  if(ret != 0) printf("Failed to create new thread\n");
+  return;
 }

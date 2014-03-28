@@ -13,6 +13,13 @@ except ImportError:
   print "easy_install --prefix=$HOME/local poster"
   sys.exit()
 
+try:
+  from awsserver import *
+except ImportError:
+  print "Please add /afs/cs/academic/class/15418-s14/assignments"
+  print "to your PYTHONPATH"
+  sys.exit()
+
 parser = argparse.ArgumentParser(description="Launch on amazon")
 parser.add_argument("--qsub", help="Max number of workers your program will require")
 parser.add_argument("--logs", help="Get log files for a job")
@@ -29,9 +36,8 @@ f = open('scoreboard_token', 'r')
 user = f.read()
 f.close
 
-UPLOAD_SERVER = 'http://107.20.226.209:8889/upload'
-JOB_QUEUE = 'http://107.20.226.209:8888/jobs'
-
+#UPLOAD_SERVER = 'http://107.20.226.209:8889/upload'
+#JOB_QUEUE = 'http://107.20.226.209:8888/jobs'
 
 def unzip_logs(job_id):
   cmd = "tar -xvf job-%s-logs.tar.gz" % job_id;

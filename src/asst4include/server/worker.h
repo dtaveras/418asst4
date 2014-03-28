@@ -35,11 +35,6 @@ void execute_work(const Request_msg& req, Response_msg& resp);
  */
 
 /**
- * typically used by a thread to execute the requested message
- */
-void* worker_thread_execute(void* rq);
-
-/**
  * @brief Worker node init hook.
  *
  * Note: use the dictionary 'params' to pass data from the master node
