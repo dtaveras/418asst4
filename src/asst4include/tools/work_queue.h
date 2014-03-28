@@ -24,6 +24,7 @@ public:
   T get_work() {
     pthread_mutex_lock(&queue_lock);
     while (storage.size() == 0) {
+      printf("Stuck!!\n");
       pthread_cond_wait(&queue_cond, &queue_lock);
     }
 

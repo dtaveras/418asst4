@@ -121,6 +121,8 @@ void handle_worker_response(Worker_handle worker_handle, const Response_msg& res
   // Master node has received a response from one of its workers.
   int tag = resp.get_tag();
   send_client_response(mstate.waiting_clients[tag], resp);
+  
+  //Add this response to the cache
 
   mstate.num_req_map[worker_handle] -= 1;
   mstate.total_pending_client_requests -= 1;
@@ -137,6 +139,8 @@ void handle_client_request(Client_handle client_handle, const Request_msg& clien
     send_client_response(client_handle, resp);
     return;
   }
+
+  //Check if the incoming request is cached
 
   int tag = mstate.max_req_pos++;
   Request_msg worker_req(tag, client_req);
@@ -213,8 +217,16 @@ void handle_tick() {
   // 'master_node_init'.
   printf("handling tick\n");
   printf("[Worker_Queue_Size: %d]\n", mstate.work_queue_size);
+  printf("[");
+  for(int i = 0; i < mstate.max_num_workers; i++){
+    if(mstate.workers[i] != NULL){
+      printf(" %d ",mstate.num_req_map[mstate.workers[i]]);
+    }
+  }
+  printf("]\n");
   if(mstate.work_queue_size > 0){
     Request_msg req = mstate.work_queue.get_work();
+    printf("GOT WORK!\n");
     for(int i=0; i< mstate.max_num_workers; i++){
       if( mstate.workers[i] != NULL &&
 	  mstate.num_req_map[mstate.workers[i]] < MAX_WORKER_JOBS ){

@@ -27,12 +27,12 @@ THELLO=hello418.txt
 all : worker master
 
 run: run.sh worker master | $(LOGDIR)
-	./run.sh 2 tests/$(TGRADING1)
-	./run.sh 2 tests/$(TGRADING2)
+#	./run.sh 2 tests/$(TGRADING1)
+#	./run.sh 2 tests/$(TGRADING2)
 	./run.sh 2 tests/$(TGRADING3)
-	./run.sh 2 tests/$(TGRADING4)
-	./run.sh 2 tests/$(TGRADING5)
-	./run.sh 2 tests/$(TRANDOM)
+#	./run.sh 2 tests/$(TGRADING4)
+#	./run.sh 2 tests/$(TGRADING5)
+#	./run.sh 2 tests/$(TRANDOM)
 
 SRCS=
 DEPS=
